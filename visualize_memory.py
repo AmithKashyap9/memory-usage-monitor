@@ -7,14 +7,18 @@ def plot_memory_usage(log_file):
     df['Timestamp'] = pd.to_datetime(df['Timestamp'])
     
     df['Used Memory (GB)'] = df['Used Memory (KB)'] / (1024 * 1024)
-    
+    df['Used Swap (GB)'] = df['Used Swap (KB)'] / (1024 * 1024)
+
     plt.figure(figsize=(12, 6))
-    plt.plot(df['Timestamp'], df['Used Memory (GB)'], marker='o', linestyle='-', color='b')
-    plt.title('Memory Usage Over Time')
+    plt.plot(df['Timestamp'], df['Used Memory (GB)'], marker='o', linestyle='-', color='b', label='Used Memory (GB)')
+    plt.plot(df['Timestamp'], df['Used Swap (GB)'], marker='x', linestyle='-', color='r', label='Used Swap (GB)')
+    
+    plt.title('Memory and Swap Usage Over Time')
     plt.xlabel('Timestamp')
-    plt.ylabel('Memory Usage (GB)')
+    plt.ylabel('Usage (GB)')
     plt.grid(True)
     plt.xticks(rotation=45)
+    plt.legend()
     plt.tight_layout()  
     plt.savefig('memory_usage_plot.png') 
     plt.show()

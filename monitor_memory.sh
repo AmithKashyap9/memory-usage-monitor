@@ -24,14 +24,15 @@ done
 
 get_memory_usage() {
   local used_memory=$(vmstat -s | grep "used memory" | awk '{print $1}')
-  echo "$used_memory"
+  local used_swap=$(vmstat -s | grep "used swap" | awk '{print $1}')
+  echo "$used_memory,$used_swap"
 }
 
-echo "Starting memory usage monitoring..."
+echo "Starting memory and swap usage monitoring..."
 echo "Duration: $DURATION seconds"
 echo "Interval: $INTERVAL seconds"
 echo "Output file: $OUTPUT_FILE"
-echo "Timestamp,Used Memory (KB)" > "$OUTPUT_FILE"
+echo "Timestamp,Used Memory (KB),Used Swap (KB)" > "$OUTPUT_FILE"
 
 END_TIME=$((SECONDS + DURATION))
 
